@@ -9,6 +9,14 @@
   dependencies:
     tslib "^2.3.1"
 
+"@babylonjs/gui@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/gui/-/gui-5.2.0.tgz#727199dd368ffd879b2e6797ce5d37b1cbf00980"
+  integrity sha512-o2UlafWCMrvpkrjJ4mLOCGp6hAm66xcWdryoNWOhQgfI7DrkKzUQa3XCLSIxBWu7jTa5nimIciwXpULtYWO+Lg==
+  dependencies:
+    "@babylonjs/core" "^5.2.0"
+    tslib "^2.3.1"
+
 "@eslint/eslintrc@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.0.5.tgz#33f1b838dbf1f923bfa517e008362b78ddbbf318"

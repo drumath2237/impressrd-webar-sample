@@ -1,5 +1,6 @@
 import './style.scss';
 import * as BABYLON from '@babylonjs/core';
+import * as GUI from '@babylonjs/gui';
 
 const main = async () => {
   const renderCanvas = <HTMLCanvasElement>(
@@ -10,18 +11,32 @@ const main = async () => {
     const engine = new BABYLON.Engine(renderCanvas, true);
     const scene = new BABYLON.Scene(engine);
 
-    scene.createDefaultCameraOrLight(true, true, true);
-
-    const boxSize = 0.2;
-    const box = BABYLON.MeshBuilder.CreateBox('box', { size: boxSize });
-    box.position.addInPlaceFromFloats(0, 1.6, 0);
-
-    const xr = await scene.createDefaultXRExperienceAsync({
+    const xrInitializeTask = scene.createDefaultXRExperienceAsync({
       uiOptions: {
         sessionMode: 'immersive-ar',
       },
       optionalFeatures: true,
     });
+
+    scene.createDefaultCameraOrLight(true, true, true);
+
+    // GUI settings
+    GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI', true, scene);
+    const button = GUI.Button.CreateSimpleButton('button', 'Put');
+    button.widthInPixels = 800;
+    button.heightInPixels = 150;
+    button.color = 'white';
+    button.cornerRadius = 20;
+    button.background = 'green';
+    button.fontSizeInPixels = 50;
+    button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    button.topInPixels = -10;
+
+    const boxSize = 0.2;
+    const box = BABYLON.MeshBuilder.CreateBox('box', { size: boxSize });
+    box.visibility = 0;
+
+    const xr = await xrInitializeTask;
     const featureManager = xr.baseExperience.featuresManager;
     const hitTest = featureManager.enableFeature(
       BABYLON.WebXRHitTest,
@@ -34,11 +49,13 @@ const main = async () => {
 
     hitTest.onHitTestResultObservable.add((result) => {
       if (!result.length) {
+        box.visibility = 0;
         return;
       }
 
       box.position = result[0].position;
       box.rotationQuaternion = result[0].rotationQuaternion;
+      box.visibility = 1;
     });
 
     engine.runRenderLoop(() => {
