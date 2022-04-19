@@ -13,6 +13,9 @@ export default defineConfig(({ mode }) => {
       },
     };
   } else {
-    return {};
+    return {
+      // github pages用の設定
+      base: '/impressrd-webar-sample/',
+    };
   }
 });
