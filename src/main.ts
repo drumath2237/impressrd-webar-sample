@@ -7,60 +7,62 @@ const main = async () => {
     document.getElementById('renderCanvas')
   );
 
-  if (renderCanvas) {
-    const engine = new BABYLON.Engine(renderCanvas, true);
-    const scene = new BABYLON.Scene(engine);
-
-    const xrInitializeTask = scene.createDefaultXRExperienceAsync({
-      uiOptions: {
-        sessionMode: 'immersive-ar',
-      },
-      optionalFeatures: true,
-    });
-
-    scene.createDefaultCameraOrLight(true, true, true);
-
-    const boxSize = 0.2;
-    const box = BABYLON.MeshBuilder.CreateBox('box', { size: boxSize });
-    box.visibility = 0;
-
-    const xr = await xrInitializeTask;
-    const featureManager = xr.baseExperience.featuresManager;
-    const hitTest = featureManager.enableFeature(
-      BABYLON.WebXRHitTest,
-      'latest',
-    ) as BABYLON.WebXRHitTest;
-
-    let latestHitTestResult: BABYLON.IWebXRHitResult | null = null;
-    hitTest?.onHitTestResultObservable.add((result) => {
-      if (!result.length) {
-        latestHitTestResult = null;
-        box.visibility = 0;
-        return;
-      }
-
-      latestHitTestResult = result[0];
-
-      box.position = result[0].position;
-      box.rotationQuaternion = result[0].rotationQuaternion;
-      box.visibility = 1;
-    });
-
-    const button = addButton();
-    button.onPointerClickObservable.add(() => {
-      if (latestHitTestResult === null) {
-        return;
-      }
-
-      const hitbox = box.clone('hitbox');
-      hitbox.position = latestHitTestResult.position;
-      hitbox.rotationQuaternion = latestHitTestResult.rotationQuaternion;
-    });
-
-    engine.runRenderLoop(() => {
-      scene.render();
-    });
+  if (!renderCanvas) {
+    return;
   }
+
+  const engine = new BABYLON.Engine(renderCanvas, true);
+  const scene = new BABYLON.Scene(engine);
+
+  const xrInitializeTask = scene.createDefaultXRExperienceAsync({
+    uiOptions: {
+      sessionMode: 'immersive-ar',
+    },
+    optionalFeatures: true,
+  });
+
+  scene.createDefaultCameraOrLight(true, true, true);
+
+  const boxSize = 0.2;
+  const box = BABYLON.MeshBuilder.CreateBox('box', { size: boxSize });
+  box.visibility = 0;
+
+  const xr = await xrInitializeTask;
+  const featureManager = xr.baseExperience.featuresManager;
+  const hitTest = featureManager.enableFeature(
+    BABYLON.WebXRHitTest,
+    'latest',
+  ) as BABYLON.WebXRHitTest;
+
+  let latestHitTestResult: BABYLON.IWebXRHitResult | null = null;
+  hitTest?.onHitTestResultObservable.add((result) => {
+    if (!result.length) {
+      latestHitTestResult = null;
+      box.visibility = 0;
+      return;
+    }
+
+    latestHitTestResult = result[0];
+
+    box.position = result[0].position;
+    box.rotationQuaternion = result[0].rotationQuaternion;
+    box.visibility = 1;
+  });
+
+  const button = addButton();
+  button.onPointerClickObservable.add(() => {
+    if (latestHitTestResult === null) {
+      return;
+    }
+
+    const hitbox = box.clone('hitbox');
+    hitbox.position = latestHitTestResult.position;
+    hitbox.rotationQuaternion = latestHitTestResult.rotationQuaternion;
+  });
+
+  engine.runRenderLoop(() => {
+    scene.render();
+  });
 };
 
 const addButton = () => {

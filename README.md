@@ -2,16 +2,15 @@
 
 ## About
 
-技術書典 12 で頒布した本のサンプルプロジェクト。
-豆腐のシーンを WebAR で動かして Azure にデプロイするまでをやっています。
+Babylon.js で創った WebAR アプリのサンプルです。
 
 ## Tested Environment
 
 - Node.js v14
 - yarn
-- Vite 2
+- Vite 2.7
 - TypeScript
-- Babylon.js 5.0.0-beta.4
+- Babylon.js 5.2
 - Windows 10 Home(開発機)
 - Pixel 4a 5G(デバッグ機)
 
