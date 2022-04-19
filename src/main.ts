@@ -21,7 +21,6 @@ const main = async () => {
     scene.createDefaultCameraOrLight(true, true, true);
 
     // GUI settings
-    GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI', true, scene);
     const button = GUI.Button.CreateSimpleButton('button', 'Put');
     button.widthInPixels = 800;
     button.heightInPixels = 150;
@@ -31,6 +30,10 @@ const main = async () => {
     button.fontSizeInPixels = 50;
     button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     button.topInPixels = -10;
+
+    GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI', true, scene).addControl(
+      button,
+    );
 
     const boxSize = 0.2;
     const box = BABYLON.MeshBuilder.CreateBox('box', { size: boxSize });
@@ -43,20 +46,20 @@ const main = async () => {
       'latest',
     ) as BABYLON.WebXRHitTest;
 
-    if (!hitTest) {
-      return;
-    }
+    // if (!hitTest) {
+    //   return;
+    // }
 
-    hitTest.onHitTestResultObservable.add((result) => {
-      if (!result.length) {
-        box.visibility = 0;
-        return;
-      }
+    // hitTest.onHitTestResultObservable.add((result) => {
+    //   if (!result.length) {
+    //     box.visibility = 0;
+    //     return;
+    //   }
 
-      box.position = result[0].position;
-      box.rotationQuaternion = result[0].rotationQuaternion;
-      box.visibility = 1;
-    });
+    //   box.position = result[0].position;
+    //   box.rotationQuaternion = result[0].rotationQuaternion;
+    //   box.visibility = 1;
+    // });
 
     engine.runRenderLoop(() => {
       scene.render();
