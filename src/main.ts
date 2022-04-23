@@ -1,7 +1,5 @@
 import './style.scss';
 import * as BABYLON from '@babylonjs/core';
-import * as GUI from '@babylonjs/gui';
-import { IWebXRHitTestOptions } from '@babylonjs/core';
 
 const main = async () => {
   const renderCanvas = <HTMLCanvasElement>(
@@ -27,7 +25,7 @@ const main = async () => {
   const xr = await xrInitializeTask;
   const featureManager = xr.baseExperience.featuresManager;
 
-  const hitTestOptions: IWebXRHitTestOptions = {
+  const hitTestOptions: BABYLON.IWebXRHitTestOptions = {
     enableTransientHitTest: true,
     testOnPointerDownOnly: true,
     disablePermanentHitTest: true,
