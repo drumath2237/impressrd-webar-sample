@@ -13,21 +13,19 @@ const main = async () => {
   const engine = new BABYLON.Engine(renderCanvas, true);
   const scene = new BABYLON.Scene(engine);
 
-  const xrInitializeTask = scene.createDefaultXRExperienceAsync({
+  scene.createDefaultCameraOrLight(true, true, true);
+
+  const xr = await scene.createDefaultXRExperienceAsync({
     uiOptions: {
       sessionMode: 'immersive-ar',
     },
     optionalFeatures: true,
   });
 
-  scene.createDefaultCameraOrLight(true, true, true);
-
-  const xr = await xrInitializeTask;
   const featureManager = xr.baseExperience.featuresManager;
 
   const hitTestOptions: BABYLON.IWebXRHitTestOptions = {
     enableTransientHitTest: true,
-    testOnPointerDownOnly: true,
     disablePermanentHitTest: true,
     transientHitTestProfile: 'generic-touchscreen',
   };
