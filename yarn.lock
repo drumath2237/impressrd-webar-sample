@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@babylonjs/core@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-5.2.0.tgz#39e5630028d168f43d7d235b0f1386a9edd16133"
-  integrity sha512-xWxYUBx++9nkoJaYchEK1x6ht5JJ8MIvtSKxGZMZJzCmAn4CU6qfux9TWUqmw7jdEt9YlRFdbZn7nCQVLUa/ew==
+"@babylonjs/core@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@babylonjs/core/-/core-5.4.0.tgz#84481462df73fab0cb34a1ba4947cf15f3349bf1"
+  integrity sha512-d3y7HE/5kMRnn2dBab26+kaEpYwlowf/mg1dy+MNufmSQCURaXxSUkalUSWs634XBJVe6K/NAbVszIT8RMXKVg==
   dependencies:
     tslib "^2.3.1"
 
